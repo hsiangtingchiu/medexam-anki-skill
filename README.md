@@ -4,7 +4,7 @@
 
 ## 📖 完整新手教學（強烈推薦先看）
 
-👉 **[線上互動式教學 →](https://g07101334-max.github.io/medexam-anki-skill/)**
+👉 **[線上互動式教學 →](https://hsiangtingchiu.github.io/medexam-anki-skill/)**
 
 從零開始：安裝 Anki / Obsidian → 設定 plugin → 用 skill 生卡 → 同步到 Anki，**含 16 張截圖一步步教**。第一次用必看。
 
@@ -26,7 +26,7 @@
 
 1. clone 這個 repo 到本機：
    ```bash
-   git clone https://github.com/g07101334-max/medexam-anki-skill.git
+   git clone https://github.com/hsiangtingchiu/medexam-anki-skill.git
    ```
 2. 把想用的 skill 資料夾複製到你的 Claude skills 目錄：
    - macOS：`~/Library/Application Support/Claude/skills/`
@@ -85,7 +85,7 @@ A collection of [Claude Skills](https://www.anthropic.com/news/claude-skills) fo
 ## Installation
 
 ```bash
-git clone https://github.com/g07101334-max/medexam-anki-skill.git
+git clone https://github.com/hsiangtingchiu/medexam-anki-skill.git
 ```
 
 Then copy the desired skill folder into your Claude skills directory (e.g. `~/Library/Application Support/Claude/skills/` on macOS, or under your Claude Code plugin's `skills/` directory).

@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>anki-flashcard-medical-exam — 完整新手使用說明</title>
+<style>
+  :root {
+    --bg: #fafaf8;
+    --bg-card: #ffffff;
+    --text: #1f2328;
+    --text-soft: #57606a;
+    --accent: #0969da;
+    --accent-soft: #ddf4ff;
+    --border: #d0d7de;
+    --border-soft: #e5e7eb;
+    --code-bg: #f6f8fa;
+    --code-text: #24292f;
+    --yellow-bg: #fff8c5;
+    --yellow-border: #d4a72c;
+    --yellow-text: #5a4500;
+    --red-bg: #ffebe9;
+    --red-border: #cf222e;
+    --red-text: #82071e;
+    --green-bg: #dafbe1;
+    --green-border: #1a7f37;
+    --green-text: #0a3622;
+    --purple-bg: #fbefff;
+    --purple-border: #8250df;
+    --purple-text: #4d1099;
+    --orange-bg: #fff1e5;
+    --orange-border: #d4691b;
+    --orange-text: #8a3b0e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --bg-card: #161b22;
+      --text: #e6edf3;
+      --text-soft: #9198a1;
+      --accent: #4493f8;
+      --accent-soft: #1e3a5f;
+      --border: #30363d;
+      --border-soft: #21262d;
+      --code-bg: #161b22;
+      --code-text: #e6edf3;
+      --yellow-bg: #2d2a1a;
+      --yellow-border: #d4a72c;
+      --yellow-text: #f0d878;
+      --red-bg: #2d1a1a;
+      --red-border: #cf222e;
+      --red-text: #ff8888;
+      --green-bg: #1a2d20;
+      --green-border: #1a7f37;
+      --green-text: #7ee98f;
+      --purple-bg: #2a1f3a;
+      --purple-border: #8250df;
+      --purple-text: #c5a3ff;
+      --orange-bg: #2d220e;
+      --orange-border: #d4691b;
+      --orange-text: #f0b46a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang TC", "Noto Sans TC", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    line-height: 1.75;
+    font-size: 16px;
+  }
+  .wrapper {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+  }
+  h1 {
+    margin: 0 0 8px;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    color: var(--text-soft);
+    font-size: 15.5px;
+    margin: 0 0 16px;
+    line-height: 1.5;
+  }
+  .meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--text-soft);
+  }
+  .meta a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .meta a:hover { text-decoration: underline; }
+  h2 {
+    margin: 56px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    font-size: 26px;
+    font-weight: 700;
+  }
+  h3 {
+    margin: 32px 0 12px;
+    font-size: 19px;
+    font-weight: 600;
+  }
+  h4 {
+    margin: 24px 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-soft);
+  }
+  p { margin: 8px 0; }
+  ul, ol {
+    padding-left: 24px;
+    margin: 8px 0;
+  }
+  li { margin: 6px 0; }
+  code {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  }
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 14px 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 13.5px;
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    line-height: 1.55;
+    border: 1px solid var(--border-soft);
+  }
+  pre code {
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+  }
+  /* hero box */
+  .hero {
+    background: linear-gradient(135deg, var(--accent-soft) 0%, var(--purple-bg) 100%);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 24px 0 40px;
+    border: 1px solid var(--border);
+  }
+  .hero-title {
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0 0 12px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .hero-stat {
+    text-align: left;
+  }
+  .hero-stat-num {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .hero-stat-label {
+    font-size: 12px;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  /* TOC */
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 24px 0 40px;
+  }
+  .toc-title {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 0 0 12px;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 20px;
+    columns: 2;
+    column-gap: 32px;
+  }
+  .toc a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14.5px;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc ol > li { margin: 8px 0; }
+  /* Callouts */
+  .callout {
+    border-left: 4px solid;
+    padding: 12px 18px;
+    border-radius: 0 6px 6px 0;
+    margin: 16px 0;
+  }
+  .callout p:first-child { margin-top: 0; }
+  .callout p:last-child { margin-bottom: 0; }
+  .screenshot-needed {
+    background: var(--yellow-bg);
+    border-left-color: var(--yellow-border);
+    color: var(--yellow-text);
+  }
+  .screenshot-needed .label {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 11px;
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--yellow-border);
+    color: white;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+  .screenshot-needed .desc {
+    font-weight: 600;
+    margin: 6px 0 4px;
+    font-size: 14.5px;
+  }
+  .screenshot-needed .hint {
+    font-size: 13px;
+    opacity: 0.85;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .screenshot-img {
+    display: block;
+    max-width: 100%;
+    margin: 14px auto 4px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    background: var(--bg-card);
+  }
+  .screenshot-img:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  }
+  /* Lightbox */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    cursor: zoom-out;
+    padding: 24px;
+  }
+  .lightbox-overlay.open { display: flex; }
+  .lightbox-overlay img {
+    max-width: 95vw;
+    max-height: 95vh;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .warning {
+    background: var(--red-bg);
+    border-left-color: var(--red-border);
+    color: var(--red-text);
+  }
+  .tip {
+    background: var(--accent-soft);
+    border-left-color: var(--accent);
+  }
+  .success {
+    background: var(--green-bg);
+    border-left-color: var(--green-border);
+    color: var(--green-text);
+  }
+  .case {
+    background: var(--orange-bg);
+    border-left-color: var(--orange-border);
+    color: var(--orange-text);
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    margin: 16px 0 20px;
+  }
+  .case-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 11px;
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--orange-border);
+    color: white;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+  .scenario {
+    background: var(--purple-bg);
+    border-left-color: var(--purple-border);
+    color: var(--purple-text);
+    padding: 10px 16px;
+    border-left-width: 4px;
+    border-radius: 0 6px 6px 0;
+    margin: 16px 0 8px;
+    font-weight: 500;
+    font-size: 14.5px;
+  }
+  /* Chat bubble */
+  .chat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 8px 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .chat-user {
+    border-left: 3px solid var(--accent);
+  }
+  .chat-claude {
+    border-left: 3px solid #8a63d2;
+  }
+  .chat-who {
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+  /* Step badge */
+  .step {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    min-width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    margin-right: 8px;
+    vertical-align: middle;
+    padding: 0 8px;
+  }
+  /* Big section card */
+  .part {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 32px 0;
+  }
+  .part-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  th {
+    background: var(--code-bg);
+    font-weight: 600;
+  }
+  /* kbd */
+  kbd {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.85em;
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    white-space: nowrap;
+  }
+  /* footer */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-soft);
+    color: var(--text-soft);
+    font-size: 13px;
+    text-align: center;
+  }
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  h2[id], h3[id] {
+    scroll-margin-top: 16px;
+  }
+  /* responsive */
+  @media (max-width: 600px) {
+    .wrapper { padding: 24px 16px 48px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 21px; }
+    .toc ol { columns: 1; }
+    .hero-stats { gap: 16px; }
+    .hero-stat-num { font-size: 22px; }
+  }
+
+  figure.screenshot {
+    margin: 20px 0;
+    padding: 0;
+    text-align: center;
+  }
+  figure.screenshot .screenshot-img {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+  }
+  figure.screenshot figcaption {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-soft);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<header>
+  <h1>📚 醫師國考考古題 → Anki 卡片</h1>
+  <p class="subtitle">
+    用 <code>anki-flashcard-medical-exam</code> skill 把考選部考古題（PDF / RTF / Markdown / TXT / DOCX 全格式支援）自動產生成可背的 Anki flashcard。<br>
+    這份說明書寫給<strong>從來沒用過 Obsidian / Anki / Claude 的同學</strong>，從零開始一步一步教。
+  </p>
+  <div class="meta">
+    <span>👤 Ting Chiu</span>
+    <span>📅 2026-05-25</span>
+    <a href="https://github.com/g07101334-max/medexam-anki-skill/blob/main/skills/anki-flashcard-medical-exam/SKILL.md" target="_blank">📄 GitHub SKILL.md ↗</a>
+  </div>
+</header>
+
+<div class="hero">
+  <p class="hero-title">📊 這份 skill 能做到什麼？以我們真實處理「醫學六」為例：</p>
+  <p>2026-05-25 一個下午內，把 9 份醫學六考古題（111-1 ~ 115-1）一口氣做完，全部產出可同步到 Anki 的 .md 檔。</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">9</div>
+      <div class="hero-stat-label">份考古題</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">720</div>
+      <div class="hero-stat-label">題完整轉檔</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">~3500</div>
+      <div class="hero-stat-label">個 wikilink 標籤</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">6</div>
+      <div class="hero-stat-label">科別自動標</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" style="color: var(--green-border);">~10 分鐘</div>
+      <div class="hero-stat-label">你實際動手時間</div>
+    </div>
+  </div>
+  <p style="margin-top: 20px; font-size: 14px; color: var(--text-soft);">
+    👆 重點：你只要把考古題檔（PDF 或任一支援格式）拖進去、回答幾個問題、改一下 Obsidian to Anki 的 Scan Directory 設定，剩下都是 Claude 在跑。<strong>Claude 跑題的時間 = 你可以拿來真的讀書、優化筆記系統、做更有產值的事的時間</strong>。
+  </p>
+</div>
+
+<section class="toc">
+  <p class="toc-title">📑 目錄</p>
+  <ol>
+    <li><a href="#why">為什麼用這個方法</a></li>
+    <li><a href="#part-a">Part A：環境準備（看影片 + 2 個關鍵設定）</a></li>
+    <li><a href="#part-b">Part B：Obsidian to Anki plugin 客製化設定</a></li>
+    <li><a href="#part-c-skill">Part C：開始用 skill 生卡（醫學六實況）</a></li>
+    <li><a href="#part-d-sync">Part D：同步到 Anki</a></li>
+    <li><a href="#fix">修正：tag 漏標 / 答案錯</a></li>
+    <li><a href="#trouble">故障排除</a></li>
+    <li><a href="#tag-rules">附錄：tag 規則速查</a></li>
+    <li><a href="#links">相關連結</a></li>
+  </ol>
+</section>
+
+<h2 id="why">為什麼用這個方法</h2>
+
+<style>
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .compare-card {
+    border-radius: 12px;
+    padding: 20px 22px;
+    border: 2px solid;
+  }
+  .compare-card.old {
+    background: var(--red-bg);
+    border-color: var(--red-border);
+    color: var(--red-text);
+  }
+  .compare-card.new {
+    background: var(--green-bg);
+    border-color: var(--green-border);
+    color: var(--green-text);
+  }
+  .compare-emoji {
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .compare-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  .compare-time {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 8px 0 16px;
+    line-height: 1;
+  }
+  .compare-time-label {
+    font-size: 12px;
+    opacity: 0.75;
+    font-weight: 500;
+    margin-left: 6px;
+  }
+  .compare-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .compare-steps li {
+    padding: 6px 0;
+    padding-left: 24px;
+    position: relative;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .compare-steps li:last-child { border-bottom: none; }
+  .compare-card.old .compare-steps li::before {
+    content: "😩";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    font-size: 14px;
+  }
+  .compare-card.new .compare-steps li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    font-weight: 700;
+    color: var(--green-border);
+  }
+  .compare-card.new .compare-steps li.auto::before {
+    content: "🤖";
+  }
+  .compare-vs {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-soft);
+    margin: -8px 0 -8px;
+  }
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="compare-grid">
+  <div class="compare-card old">
+    <div class="compare-emoji">😵‍💫</div>
+    <div class="compare-title">傳統方式（土法煉鋼）</div>
+    <div class="compare-time">30–50<span class="compare-time-label">小時 / 9 份</span></div>
+    <ul class="compare-steps">
+      <li>打開 PDF 一題一題複製</li>
+      <li>到 Anki 一張一張貼題目選項</li>
+      <li>查每題答案 + 想 tag 怎麼標</li>
+      <li>手動整理科別分類</li>
+      <li>處理「均給分」、「一律給分」</li>
+      <li>校對 → 改錯 → 再校對</li>
+    </ul>
+  </div>
+
+  <div class="compare-card new">
+    <div class="compare-emoji">🚀</div>
+    <div class="compare-title">用這個 skill</div>
+    <div class="compare-time">~10<span class="compare-time-label">分鐘 / 9 份（含截圖時間）</span></div>
+    <ul class="compare-steps">
+      <li>拖 9 份考古題檔（PDF/RTF/MD…皆可）進 Cowork</li>
+      <li>打 <code>/anki-flashcard-medical-exam</code></li>
+      <li>回答 Claude 幾個問題</li>
+      <li class="auto">Claude 自動生成 720 題 → vault</li>
+      <li class="auto">改一下 Scan Directory → Sync</li>
+      <li class="auto">720 張卡自動進 Anki</li>
+      <li class="auto">改卡片直接在 Obsidian 改，還可以再叫 Claude 幫改</li>
+    </ul>
+  </div>
+</div>
+
+<h3 style="margin-top: 32px;">🌟 額外大優勢：題庫永遠在你手上、永遠可改</h3>
+<p>
+  傳統用 Anki：要改題目就得在 Anki 視窗內一張一張點開來改，沒有版本控制、不能批次處理、不能用 Claude 幫忙批次改。
+</p>
+<p>
+  <strong>用這個流程：你的「題庫真相」是 Obsidian 內的 .md 純文字檔。</strong>這代表：
+</p>
+
+<div class="compare-grid">
+  <div class="compare-card new">
+    <div class="compare-emoji">✍️</div>
+    <div class="compare-title">在 Obsidian 內直接改</div>
+    <ul class="compare-steps">
+      <li>找錯字、改答案、補 tag 全在 .md 內</li>
+      <li>用 Obsidian 強大的搜尋 / 取代</li>
+      <li>用 backlink 看哪些題都涉及同一個疾病</li>
+      <li>用 graph view 看 tag 之間的網絡</li>
+      <li>改完 sync 一次，Anki 卡自動 update</li>
+    </ul>
+  </div>
+
+  <div class="compare-card new" style="background: var(--accent-soft); border-color: var(--accent); color: var(--text);">
+    <div class="compare-emoji">🤖</div>
+    <div class="compare-title">叫 Claude 幫批次改</div>
+    <ul class="compare-steps" style="font-size: 14px;">
+      <li style="color: var(--text);">「114-2-6 Q15 tag 漏標 hyperkalemia」</li>
+      <li style="color: var(--text);">「所有 OBGYN 考古加 [[OBGYN 重點]] tag」</li>
+      <li style="color: var(--text);">「113-2-6 Q47 答案應該是 D，改一下」</li>
+      <li style="color: var(--text);">「掃描醫學六，挑出所有圖片題列清單給我」</li>
+      <li style="color: var(--text);">「醫學三所有 [[gout]] 題目 cross-link 到我的痛風筆記」</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout success">
+  💡 <strong>關鍵差異：</strong>傳統 Anki 一旦做好卡，要「批次調整」幾乎不可能（除非寫 add-on）。這個流程的卡片源頭是 .md 純文字，Claude 可以批次掃描、批次替換、批次補 tag——你只要用嘴巴說就好。等於把<strong>題庫的「維護與優化」也自動化了</strong>。
+</div>
+
+<h3 style="margin-top: 32px;">🕸️ 隱藏寶藏：wikilink 自動長出「原子筆記」知識網絡</h3>
+<p>
+  Claude 在生卡片時會做一件 Anki 完全沒有的事——<strong>把題目中文敘述（像「心肌梗塞」、「高血鉀」、「呼吸困難」）自動轉成英文專有名詞，再包成 <code>[[wikilink]]</code></strong>。
+</p>
+
+<div class="callout success">
+  <strong>它的好處：每個 <code>[[xxx]]</code> 就是一個「原子筆記」種子</strong>
+  <ol style="margin: 8px 0;">
+    <li>題目末尾的 <code>[[myocardial infarction]]</code> → 在 Obsidian 內變成可點 link</li>
+    <li>點下去 → Obsidian 自動建立 <code>myocardial infarction.md</code>，這就是一個新的概念筆記</li>
+    <li>之後所有題目提到 MI 都會 <strong>backlink</strong> 到這份筆記</li>
+    <li>打開 Graph View → 整個 vault 像一張概念星雲，越常考的疾病節點越大</li>
+  </ol>
+  <p style="margin-top: 8px; font-size: 13px; color: var(--text-soft);">
+    醫學六 9 份共 720 題，產出約 <strong>3500 個 wikilink</strong>（平均每題 ~5 個），跨 6 科自動串聯。
+  </p>
+</div>
+
+<figure class="screenshot">
+  <img src="images/14-wikilink-demo.png" alt="Obsidian 內顯示題目時 wikilink 變紫色可點 link 的樣子" class="screenshot-img">
+  <figcaption>Obsidian 內顯示題目時 wikilink 變紫色可點 link 的樣子</figcaption>
+</figure>
+
+<div class="callout tip" style="margin: 16px 0 32px;">
+  <strong>📝 這份說明書的順序：</strong>Part A → B 是<strong>一次性的環境準備</strong>（裝完不用再裝）。Part C、D 是<strong>每份新考古題都會跑一次的流程</strong>，但你的部分超快，主要時間都是 Claude 在生 + Anki 在同步。新手請依序跟著做。
+</div>
+
+<!-- =============================================== -->
+<!-- PART A: Anki + AnkiConnect                        -->
+<!-- =============================================== -->
+<div class="part">
+<span class="part-tag">Part A · 一次性環境準備</span>
+<h2 id="part-a" style="margin-top: 0; border-bottom: none; padding-bottom: 0;">🃏 Part A：裝 Anki + AnkiConnect</h2>
+
+<h3>A1. 下載並安裝 Anki 主程式</h3>
+<ol>
+  <li>到 <a href="https://apps.ankiweb.net/" target="_blank">https://apps.ankiweb.net/</a> 下載對應你作業系統的版本（Mac、Windows、Linux 都可）</li>
+  <li>安裝完打開 Anki，第一次會問你要不要建立 AnkiWeb 帳號 —— 建議建一個，可以雲端同步到手機</li>
+  <li>看到主畫面（左側「牌組 / Decks」列表、上方「新增 / Add」按鈕等）就表示安裝完成</li>
+</ol>
+
+<figure class="screenshot">
+  <img src="images/01-anki-home.png" alt="Anki 安裝完成後的主畫面" class="screenshot-img">
+  <figcaption>Anki 安裝完成後的主畫面</figcaption>
+</figure>
+
+<h3>A2. 其他基礎安裝看這支影片就好（10 分鐘）</h3>
+
+<div class="callout tip">
+  💡 <strong>不重複造輪子。</strong>YouTuber「醫學生 J」已經做了非常清楚的 Anki + Obsidian + AnkiConnect + Obsidian to Anki plugin 全套安裝教學，照影片做就行。
+</div>
+
+<div style="margin: 20px 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+  <iframe src="https://www.youtube-nocookie.com/embed/S0fDdArNtRo"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+          title="Anki + Obsidian 安裝教學"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+</div>
+<p style="font-size: 13px; color: var(--text-soft); text-align: center;">
+  📺 影片連結：<a href="https://youtu.be/S0fDdArNtRo" target="_blank">https://youtu.be/S0fDdArNtRo</a>
+</p>
+
+<p>影片裡會教你：</p>
+<ul>
+  <li>✅ 在 Anki 內裝 AnkiConnect addon（代碼 <code>2055492159</code>）+ webCors 白名單設定 + 重啟</li>
+  <li>✅ 下載安裝 Obsidian、建 vault</li>
+  <li>✅ 在 Obsidian 開啟 Community plugins → 裝 Obsidian to Anki plugin</li>
+  <li>✅ Plugin 與 Anki 的初步連線測試</li>
+</ul>
+
+<h4 style="margin-top: 24px;">📋 影片裡會叫你設定的程式碼（直接複製貼上）</h4>
+<p>影片教到下面三個設定時，你會需要這些 code。先存著，到時候 copy-paste 即可（不用自己手打）。</p>
+
+<h4 style="color: var(--accent); margin-top: 16px;">▸ AnkiConnect Config JSON（允許 Obsidian 連線）⚠️ 必做</h4>
+<p>
+  到 Anki → <kbd>工具 / Tools</kbd> → <kbd>附加元件 / Add-ons</kbd> → 選 <strong>AnkiConnect</strong> → 右側按 <kbd>設定 / Config</kbd>。把整個 JSON 內容覆蓋成下面這份（重點是 <code>"webCorsOriginList"</code> 內要有 <code>"app://obsidian.md"</code>）：
+</p>
+<pre><code>{
+  "apiKey": null,
+  "apiLogPath": null,
+  "ignoreOriginList": [],
+  "webBindAddress": "127.0.0.1",
+  "webBindPort": 8765,
+  "webCorsOriginList": [
+    "http://localhost",
+    "app://obsidian.md"
+  ]
+}</code></pre>
+<p>
+  按 <kbd>確定 / OK</kbd> 後，<strong>🔄 完全結束 Anki 再重開</strong>（Mac 上 <kbd>⌘Q</kbd>，不要只關視窗）。
+</p>
+
+<div class="callout warning">
+  ⚠️ 沒做這個 JSON 設定 = Obsidian sync 時跳「Failed to connect to AnkiConnect」。<strong>影片可能有教，但很容易漏，務必確認。</strong>
+</div>
+
+<h4 style="color: var(--accent); margin-top: 16px;">▸ 兩條 Custom Regexp（放到 plugin 設定 → Custom Regexp）</h4>
+<p>讓 <code>#flashcard</code> 與 <code>#clozecard</code> 兩種 tag 都能正確觸發 Anki 卡片：</p>
+<pre><code>((?:[^\n][\n]?)+) #clozecard ?\n*((?: \n(?:^.{1,3}$|^.{4}(?&lt;!&lt;!--).*))+)</code></pre>
+<pre><code>((?:[^\n][\n]?)+) #flashcard ?\n*((?: \n(?:^.{1,3}$|^.{4}(?&lt;!&lt;!--).*))+)</code></pre>
+
+<h4 style="color: var(--accent); margin-top: 16px;">▸ Anki 卡片背面模板（讓卡背顯示 Obsidian Link + Context）</h4>
+<p>到 Anki → <kbd>工具 / Tools</kbd> → <kbd>管理筆記類型 / Manage Note Types</kbd> → 選 Basic 或對應 note type → <kbd>卡片 / Cards</kbd> → 編輯「背面範本」貼上：</p>
+<pre><code>{{FrontSide}}
+
+&lt;hr id=answer&gt;
+
+{{背面}}
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+&lt;div style='font-size: 12px;'&gt;{{Obsidian Link}}{{Obsidian Context}}&lt;/div&gt;</code></pre>
+
+<div class="callout warning">
+  ⚠️ <strong>用這個模板前，Anki Note Type 必須先有以下 4 個 field：</strong>
+  <ul style="margin: 8px 0;">
+    <li><code>Front</code>（卡片正面）</li>
+    <li><code>背面</code>（答案內容）</li>
+    <li><code>Obsidian Link</code>（plugin 自動寫入 source link）</li>
+    <li><code>Obsidian Context</code>（plugin 自動寫入 file path / heading 路徑）</li>
+  </ul>
+  到 Anki → <kbd>工具 / Tools</kbd> → <kbd>管理筆記類型</kbd> → 選 note type → <kbd>欄位 / Fields</kbd> → <kbd>新增</kbd> 把缺的補上。
+</div>
+
+<h3>A3. 影片後唯一還要你動手做的事：在 vault 建好「科目」層資料夾</h3>
+
+<div class="callout tip">
+  💡 影片裡教的 AnkiConnect 安裝 + 白名單 + 重啟、Obsidian 安裝、plugin 安裝這些都已涵蓋了，跟著影片做完就好。下面只剩你要在 Obsidian vault 內準備好資料夾結構，之後 skill 才知道要把 .md 存到哪。
+</div>
+
+<h4>在 vault 內建好「科目」層資料夾（只到科目就好）</h4>
+
+<div class="callout success">
+  🎯 <strong>你只要手動建到「科目」這一層就好，剩下子資料夾全部由 skill 自動建立！</strong>
+</div>
+
+<p>
+  在你的 Obsidian vault 內建立以下資料夾（左側 file explorer 右鍵 → New folder）。<strong>只需建到「醫學三/四/五/六」這層空資料夾即可</strong>，每份考古題的子資料夾（如 <code>115-1-6/</code>）+ .md 檔，<strong>全部由 Claude 自動建立</strong>。
+</p>
+
+<figure class="screenshot">
+  <img src="images/04a-folders-before.png" alt="你手動建好的狀態：只有 4 個空的科目資料夾" class="screenshot-img">
+  <figcaption>BEFORE：你手動建好的狀態：只有 4 個空的科目資料夾</figcaption>
+</figure>
+
+<p style="margin-top: 16px;">
+  Skill 跑完後會自動長出每份考卷的子資料夾與 .md：
+</p>
+
+<figure class="screenshot">
+  <img src="images/04b-folders-after.png" alt="skill 跑完的狀態：科目資料夾下出現 9 個考卷子資料夾" class="screenshot-img">
+  <figcaption>AFTER：skill 跑完的狀態：科目資料夾下出現 9 個考卷子資料夾</figcaption>
+</figure>
+
+<div class="callout tip">
+  💡 路徑可以自訂，但 Part B 的 Folder Table 要對應你的真實路徑。本說明書都用 <code>考古/歷屆考古/醫學X</code> 為例。
+</div>
+</div>
+
+<!-- =============================================== -->
+<!-- PART B: Obsidian to Anki 客製化設定 (原 C3)        -->
+<!-- =============================================== -->
+<div class="part">
+<span class="part-tag">Part B · 一次性環境準備</span>
+<h2 id="part-b" style="margin-top: 0; border-bottom: none; padding-bottom: 0;">🔌 Part B：Obsidian to Anki 客製化設定（必做）</h2>
+
+<p>
+  影片裡只教 plugin 安裝，但 plugin 內<strong>幾個關鍵設定一定要客製化</strong>，否則：(1) sync 會卡住、(2) 卡片進錯 deck、(3) 在 Anki 內看到卡片時無法跳回 Obsidian source。
+</p>
+
+<p>
+  到 <kbd>設定 / Settings</kbd> → 左欄滾到下方點 <kbd>Obsidian to Anki</kbd>。以下設定全部都在這頁。
+</p>
+
+<h3>B1. Scan Directory（通常可不填）</h3>
+<p>
+  到設定頁的 <strong>Defaults</strong> 區段，找 <strong>「Scan Directory」</strong>（欄位下方說明：<em>The directory to scan. Leave empty to scan the entire vault</em>）。
+</p>
+
+<div class="callout tip">
+  💡 <strong>一般可以留空</strong>（plugin 會掃整個 vault）。但如果遇到：
+  <ul style="margin: 8px 0;">
+    <li>sync 太慢或卡在「Scanning vault...」</li>
+    <li>plugin 找不到考古題 .md 檔</li>
+  </ul>
+  就把這欄填上你想限定的範圍，例如：
+  <pre style="margin: 8px 0;"><code>考古/歷屆考古/醫學六</code></pre>
+  把搜尋範圍縮小，sync 會穩定很多。
+</div>
+
+<figure class="screenshot">
+  <img src="images/06-scan-directory.png" alt="Scan Directory 欄位（在 Defaults 區段下）" class="screenshot-img">
+  <figcaption>Scan Directory 欄位（在 Defaults 區段下）</figcaption>
+</figure>
+
+<h3>B2. Folder Table（核心設定）⚠️ 必做</h3>
+
+<p>
+  這個就是讓「Obsidian 資料夾 ↔ Anki Deck」對應的核心設定。<strong>建議「每份考卷 = 一個 Anki 子 deck」</strong>，這樣在 Anki 內可以針對某次考古題單獨複習。
+</p>
+
+<h4>建議的命名規則</h4>
+<p>用 <code>::</code> 在 Anki 內建立階層 deck（Anki 的標準語法）：</p>
+<pre><code>國考考古題
+  └── 醫學六考古題
+        ├── 115-1
+        ├── 114-2
+        ├── 114-1
+        └── 113-2 ...</code></pre>
+
+<h4>完整操作流程</h4>
+
+<ol>
+  <li>
+    <strong>先在 Anki 內建好 deck</strong>（建一次，之後增加新考古題只要重複此步驟即可）：
+    <ul>
+      <li>到 Anki 主畫面 → 滑鼠右鍵點任一現有 deck → 看到右側齒輪 → <kbd>選項</kbd> 或 <kbd>重新命名</kbd></li>
+      <li>輸入：<code>國考考古題::醫學六考古題::115-1</code>（用 <code>::</code> 分層）</li>
+      <li>確定後 deck 就會自動分層顯示</li>
+    </ul>
+  </li>
+  <li>
+    <strong>確認 deck 完整路徑</strong>：右鍵點該 deck → <kbd>重新命名</kbd> → 跳出視窗中會顯示完整路徑，<strong>選取全部 → 複製</strong>
+  </li>
+  <li>
+    <strong>到 Obsidian to Anki 設定</strong>：滑到 <strong>「Folder settings」→「Folder Table」</strong> 區段
+  </li>
+  <li>
+    <strong>新增一行對應關係</strong>：
+    <ul>
+      <li><strong>左邊欄</strong>：填 Obsidian 內考古題 .md 所在資料夾路徑，例如 <code>考古/歷屆考古/醫學六/115-1-6</code></li>
+      <li><strong>右邊欄</strong>：貼上剛複製的 Anki deck 完整路徑，例如 <code>國考考古題::醫學六考古題::115-1</code></li>
+    </ul>
+  </li>
+  <li>
+    <strong>每份考卷重複步驟 1-4</strong>（共 9 行對應，例如做完醫學六全部）
+  </li>
+</ol>
+
+<h4>範例對應表（醫學六 9 份）</h4>
+<table>
+  <tr><th>Obsidian 資料夾路徑（左）</th><th>Anki Deck 完整路徑（右）</th></tr>
+  <tr><td><code>考古/歷屆考古/醫學六/115-1-6</code></td><td><code>國考考古題::醫學六考古題::115-1</code></td></tr>
+  <tr><td><code>考古/歷屆考古/醫學六/114-2-6</code></td><td><code>國考考古題::醫學六考古題::114-2</code></td></tr>
+  <tr><td><code>考古/歷屆考古/醫學六/114-1-6</code></td><td><code>國考考古題::醫學六考古題::114-1</code></td></tr>
+  <tr><td><code>考古/歷屆考古/醫學六/113-2-6</code></td><td><code>國考考古題::醫學六考古題::113-2</code></td></tr>
+  <tr><td colspan="2" style="text-align:center; color: var(--text-soft);">… 依此類推到 111-1-6 / 111-1</td></tr>
+</table>
+
+
+<figure class="screenshot">
+  <img src="images/07a-anki-deck-menu.png" alt="Anki 中右鍵 deck 跳出選單（重新命名 / 選項 / 匯出 / 刪除）" class="screenshot-img">
+  <figcaption>Anki 中右鍵 deck 跳出選單（重新命名 / 選項 / 匯出 / 刪除）</figcaption>
+</figure>
+
+<figure class="screenshot">
+  <img src="images/07b-anki-deck-fullpath.png" alt="Anki 重新命名視窗顯示完整 deck 路徑" class="screenshot-img">
+  <figcaption>Anki 重新命名視窗顯示完整 deck 路徑</figcaption>
+</figure>
+
+<figure class="screenshot">
+  <img src="images/07c-folder-settings.png" alt="Obsidian to Anki 設定頁的 Folder settings / Folder Table 位置" class="screenshot-img">
+  <figcaption>Obsidian to Anki 設定頁的 Folder settings / Folder Table 位置</figcaption>
+</figure>
+
+<figure class="screenshot">
+  <img src="images/07d-folder-table-row.png" alt="Folder Table 一行對應的實際樣子" class="screenshot-img">
+  <figcaption>Folder Table 一行對應的實際樣子</figcaption>
+</figure>
+
+<div class="callout tip">
+  💡 其他 plugin 設定（File Link、Context、Custom Regexp 等）影片裡都有教，跟著影片做就好。Custom Regexp 已經在 <a href="#part-a">Part A2 程式碼複製專區</a> 給你了，直接 copy-paste 即可。
+</div>
+</div>
+
+<!-- =============================================== -->
+<!-- PART C (原 D): 使用 skill 生卡                  -->
+<!-- =============================================== -->
+<div class="part" style="border-color: var(--accent);">
+<span class="part-tag" style="background: var(--orange-border);">Part C · 每份考古題的流程</span>
+<h2 id="part-c-skill" style="margin-top: 0; border-bottom: none; padding-bottom: 0;">⚡ Part C：開始用 skill 生卡（用我們真實的醫學六實況示範）</h2>
+
+<p>
+  以下實況是 2026-05-25 處理 9 份醫學六考古題（111-1-6 到 115-1-6）的完整對話過程。每一步你都可以照抄。
+</p>
+
+<div class="callout success">
+  💡 <strong>你會發現你動手的部分其實超少：</strong>步驟 3（拖檔 + 一句指令）、步驟 5（回答 3 個問題）就結束了，總共動手不到 3 分鐘。步驟 6 是 Claude 在跑，你可以去做別的事。
+</div>
+
+<h3><span class="step">1</span>準備考古題檔</h3>
+<p>
+  到<a href="https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx" target="_blank">考選部歷屆試題頁面</a>下載對應科目的 PDF 試題。
+  檔名建議維持 <code>114-2-6.pdf</code> 這種格式（年份-次數-科目編號）方便辨識。
+</p>
+<p>
+  科目編號：<code>3</code> = 醫學三、<code>4</code> = 醫學四、<code>5</code> = 醫學五、<code>6</code> = 醫學六。
+</p>
+
+<p><strong>怎麼把檔案給 Claude（按方便程度排序）：</strong></p>
+
+<h4 style="margin-top: 16px; color: var(--accent);">⚡ 推薦：直接拖檔（最方便）</h4>
+<p>
+  把下載的 <strong>PDF（或 RTF / DOCX / MD）直接拖進 Cowork 對話框</strong> → 下指令。Skill 內建多格式 parser，會依副檔名自動選對的解析方式（PDF 走 <code>pdfplumber</code>、RTF 走 <code>striprtf</code>、DOCX 走 <code>python-docx</code>、MD/TXT 直接讀）。
+</p>
+
+<h4 style="margin-top: 20px; color: var(--accent);">📂 推薦：給檔案路徑（不必拖）</h4>
+<p>
+  如果檔案已經放在 vault 內，不用拖，直接告訴 Claude 路徑就好。Claude 也會主動問你「輸入檔案的完整路徑」與「輸出資料夾的完整路徑」（Step 0 必問）。
+</p>
+<div class="callout tip">
+  💡 <strong>怎麼複製 Obsidian 內的檔案路徑：</strong>在 Obsidian 左側檔案瀏覽器右鍵 → 選「複製 vault 路徑 / Copy vault path」，就會把路徑複製到剪貼簿，直接貼進對話框給 Claude。
+</div>
+
+<h4 style="margin-top: 20px; color: var(--accent);">💰 進階備案：用 pdf2md 預先轉成 markdown（極大量批次才划算）</h4>
+<p>
+  以前 skill 只支援 RTF 時，PDF 必須先外部轉檔。現在 skill 內建 PDF parser，這條路徑用不到。<strong>但如果你要一次塞 20+ 份大型 PDF</strong>，可以考慮先用 <a href="https://pdf2md.morethan.io" target="_blank">pdf2md.morethan.io</a> 把 PDF 轉成 markdown 存進 vault，再給 Claude 路徑——可以省一些 PDF parsing 的 token。日常用直接拖 PDF 就行。
+</p>
+
+<figure class="screenshot">
+  <img src="images/08-copy-vault-path.png" alt="Obsidian 內右鍵選單「複製 vault 路徑」" class="screenshot-img">
+  <figcaption>Obsidian 內右鍵選單「複製 vault 路徑」</figcaption>
+</figure>
+
+<h3><span class="step">2</span>打開 Cowork + 把 vault 拖進來（檔案權限 Claude 會自己問）</h3>
+<p>
+  在 Claude desktop app 開啟 Cowork mode。<strong>不用先做複雜設定</strong>——把考古題拖進對話框、下指令就好，Claude 跑到需要寫檔時自己會跳出來請求 vault 權限，你按「允許」即可。
+</p>
+
+<div class="callout tip">
+  💡 <strong>實況：</strong>就像你這次給我的指令「醫學六 / <code>/anki-flashcard-medical-exam</code> / 要跟我要 OB 權限」一樣——加一句「要跟我要 OB 權限」就會讓 Claude 早期確認權限，避免做到一半才卡住。如果 Claude 跑到一半說「找不到 vault」，直接回「給你權限」，Claude 就會自己跳出存取請求視窗讓你授權。
+</div>
+
+<div class="callout warning">
+  ⚠️ macOS 第一次授權時可能會跳兩次系統權限視窗（一次「資料夾存取」、一次「文件資料夾」），<strong>兩次都按允許</strong>，否則可能只有讀取沒有寫入權限。
+</div>
+
+<h3><span class="step">3</span>拖入考古題 + 下指令</h3>
+<p>
+  把所有要做的考古題檔（PDF / RTF / Markdown / TXT / DOCX 都可以，可混用）一次拖進 Cowork 對話框（醫學六的話就是 9 份），然後輸入：
+</p>
+<div class="chat chat-user">
+  <div class="chat-who">你</div>
+  <div>醫學六<br>/anki-flashcard-medical-exam<br>要跟我要 OB 權限</div>
+</div>
+
+<p>「要跟我要 OB 權限」這句是提醒 Claude 「等下需要存到 Obsidian vault，記得先問我要不要授權」。</p>
+
+<h3><span class="step">4</span>Claude 載入 skill 並請求 vault 權限</h3>
+<div class="chat chat-claude">
+  <div class="chat-who">Claude</div>
+  <div>OB vault 已連線。確認一下流程：收到 9 份醫學六考古題：111-1、111-2、112-1、112-2、113-1、113-2、114-1、114-2、115-1。<br>醫學六科目編號是 6，所以代號會是 [[111-1-6]]、[[115-1-6]] 這樣...</div>
+</div>
+
+<h3><span class="step">5</span>回答 Claude 的 3 個問題</h3>
+<p>skill 設計上會問三件事，依你的需求選擇即可：</p>
+
+<h4>Q1. 處理順序？</h4>
+<p>選 <strong>「9 份全部依序做完」</strong>（從舊到新做完最完整）。</p>
+
+<h4>Q2. 分批方式？</h4>
+<p>選 <strong>「一次 80 題」</strong>（最快，反正都是 Claude 在生）。</p>
+
+<h4>Q3. 科別 tag？</h4>
+<p>選 <strong>「先掃一份再列科別清單給我看」</strong>。Claude 會掃描其中一份題目，列出科別範圍給你確認。</p>
+
+<p>以醫學六為例，掃完 115-1-6 後 Claude 會列出：</p>
+
+<div class="callout tip">
+  <table>
+    <tr><th>科別</th><th>題號範圍</th><th>題數</th></tr>
+    <tr><td>麻醉科</td><td>Q1–9</td><td>9</td></tr>
+    <tr><td>眼科</td><td>Q10–20</td><td>11</td></tr>
+    <tr><td>耳鼻喉科</td><td>Q21–27</td><td>7</td></tr>
+    <tr><td>婦產科</td><td>Q28–57</td><td>30</td></tr>
+    <tr><td>復健科</td><td>Q58–71</td><td>14</td></tr>
+    <tr><td>醫學倫理</td><td>Q78–80</td><td>3</td></tr>
+  </table>
+</div>
+
+<p>然後 Claude 會問你「這些科別 tag 要怎麼命名？」每個科目逐一選定：</p>
+
+<table>
+  <tr><th>科別</th><th>我們這次選的 tag</th></tr>
+  <tr><td>麻醉科</td><td><code>[[Anes考古]]</code></td></tr>
+  <tr><td>眼科</td><td><code>[[Ophth考古]]</code></td></tr>
+  <tr><td>耳鼻喉科</td><td><code>[[ENT考古]]</code></td></tr>
+  <tr><td>婦產科</td><td><code>[[OBGYN考古]]</code></td></tr>
+  <tr><td>復健科</td><td><code>[[Rehab考古]]</code></td></tr>
+  <tr><td>醫學倫理</td><td><code>[[Ethics考古]]</code></td></tr>
+</table>
+
+<div class="callout tip">
+  💡 之後做同一科目時直接告訴 Claude「沿用上次的科別 tag」就好，不用再選一次。
+</div>
+
+<h3><span class="step">6</span>Claude 開始生成，每份生完會驗證</h3>
+<p>Claude 會依序：</p>
+<ol>
+  <li>依副檔名選對應 parser：PDF 用 <code>pdfplumber</code>（必要時 fallback 到 PyMuPDF）、RTF 用 <code>striprtf</code>、DOCX 用 <code>python-docx</code>、Markdown/TXT 直接讀。所有格式都會先轉成純文字 .txt 再給 Claude 讀，避免大檔爆掉 token</li>
+  <li>讀完 80 題 + 答案表</li>
+  <li>把答案表的特殊註記（# 號、均給分、一律給分）解析出來</li>
+  <li>產生整份 80 題的 markdown，含 wikilink tag、科別 tag、圖片題標記</li>
+  <li>寫到 vault 對應路徑 <code>考古/歷屆考古/醫學六/&lt;代號&gt;/&lt;代號&gt;.md</code></li>
+  <li>跑驗證指令確認題數、flashcard 標記、分隔符、圖片題數正確</li>
+</ol>
+
+<p>9 份做完會看到類似這樣的總結：</p>
+<pre><code>111-1-6: 題數=80 flashcard=80 分隔=79 圖片題=7
+111-2-6: 題數=80 flashcard=80 分隔=79 圖片題=3
+112-1-6: 題數=80 flashcard=80 分隔=79 圖片題=4
+...（共 9 份）</code></pre>
+
+<div class="callout success">
+  ✅ 全部正確的話：每份 80 題、80 個 #flashcard、79 個分隔符（80 題之間 79 個 ---），圖片題數依該份考卷實際數量而定。
+</div>
+
+<h3><span class="step">7</span>確認 vault 內檔案結構</h3>
+<p>打開 Obsidian 看左側檔案瀏覽器，應該長這樣：</p>
+
+<figure class="screenshot">
+  <img src="images/09-vault-structure.png" alt="Obsidian 左側檔案瀏覽器，展開「醫學六」看到 9 個子資料夾與對應 .md" class="screenshot-img">
+  <figcaption>Obsidian 左側檔案瀏覽器，展開「醫學六」看到 9 個子資料夾與對應 .md</figcaption>
+</figure>
+
+<p style="margin-top: 16px;">隨便打開其中一份 .md（例如 <code>115-1-6.md</code>）確認題目內容已生成：</p>
+
+<figure class="screenshot">
+  <img src="images/10-md-view.png" alt="Obsidian 開啟其中一份 .md（例如 115-1-6.md）顯示第一題完整內容" class="screenshot-img">
+  <figcaption>Obsidian 開啟其中一份 .md（例如 115-1-6.md）顯示第一題完整內容</figcaption>
+</figure>
+</div>
+
+<!-- =============================================== -->
+<!-- PART D (原 E): 同步到 Anki                       -->
+<!-- =============================================== -->
+<div class="part" style="border-color: var(--accent);">
+<span class="part-tag" style="background: var(--orange-border);">Part D · 每份考古題的流程</span>
+<h2 id="part-d-sync" style="margin-top: 0; border-bottom: none; padding-bottom: 0;">🔄 Part D：同步到 Anki</h2>
+
+<div class="callout success">
+  💡 <strong>這部分你動手的事情就是「指定 Obsidian to Anki 要掃哪個資料夾」+「按一次 Scan Vault」</strong>，剩下都是 plugin 自動跑。
+</div>
+
+<h3><span class="step">1</span>確認 Anki 已開啟</h3>
+<p>切到 Anki 主程式，確認它是開著的（不開 = AnkiConnect 沒在跑 = sync 會失敗）。</p>
+
+<h3><span class="step">2</span>（可做可不做）確認 Scan Directory</h3>
+<p>
+  打開 Obsidian → <kbd>設定 / Settings</kbd> → <kbd>Obsidian to Anki</kbd> → 確認 Scan Directory 是 <code>考古/歷屆考古/醫學六</code>。一般可以留空（plugin 會掃整個 vault），如果 sync 太慢才設定。
+</p>
+
+<h3><span class="step">3</span>按左側 sidebar 的 Scan Vault 按鈕</h3>
+<p>
+  Obsidian 左側 sidebar 有 Obsidian to Anki plugin 的按鈕（滑鼠移過去會跳 tooltip「Obsidian_to_Anki - Scan Vault」），<strong>直接點它</strong>就會開始 sync。
+</p>
+
+<figure class="screenshot">
+  <img src="images/11-scan-vault-button.png" alt="Obsidian 左側 sidebar 的 Scan Vault 按鈕（tooltip 顯示「Obsidian_to_Anki - Scan Vault」）" class="screenshot-img">
+  <figcaption>Obsidian 左側 sidebar 的 Scan Vault 按鈕（tooltip 顯示「Obsidian_to_Anki - Scan Vault」）</figcaption>
+</figure>
+
+<div class="callout tip">
+  💡 也可以用 command palette：⌘P / Ctrl+P → 輸入 <code>obsidian to anki</code> → 選 <code>Scan Vault</code>。
+</div>
+
+<h3><span class="step">4</span>等待同步完成</h3>
+<p>同步中右下角會跳一連串通知，看到下面這幾條就成功了：</p>
+
+<figure class="screenshot">
+  <img src="images/15-sync-success.png" alt="Obsidian 同步成功通知（Scanning vault → Successfully connected → All done!）" class="screenshot-img">
+  <figcaption>Obsidian 同步成功通知（Scanning vault → Successfully connected → All done!）</figcaption>
+</figure>
+
+<p style="margin-top: 12px;">720 題大約需要 20-60 秒（依電腦速度）。</p>
+
+<h3><span class="step">5</span>驗證同步成功</h3>
+
+<h4>5-1. Obsidian 端：每題下方自動長出 ID 註解</h4>
+<p>隨便打開一份 .md（例如 115-1-6.md），會看到每題下方多了一行：</p>
+<pre><code>... 答案行 ...
+&lt;!--ID: 1779693822318--&gt;</code></pre>
+
+<div class="callout warning">
+  ❗ <strong>不要手動刪掉 ID 註解</strong>。這是 plugin 用來判斷「這題已經在 Anki 裡了」的依據。刪掉它再 sync 會變成重複卡（同一題進去兩次）。
+</div>
+
+<h4>5-2. Anki 端：對應的 deck 出現新卡</h4>
+<p>切到 Anki 主畫面，會看到「國考考古題::醫學六考古題」這個科目下的 9 個子 deck 各出現 80 張新卡（共 720 張）（藍色標示「New / 新卡片」）。</p>
+
+<figure class="screenshot">
+  <img src="images/12-anki-decks.png" alt="Anki 主畫面 Deck 列表，能看到醫學三/四/六考古題 這幾個科目 deck 都有卡片數" class="screenshot-img">
+  <figcaption>Anki 主畫面 Deck 列表，能看到醫學三/四/六考古題 這幾個科目 deck 都有卡片數</figcaption>
+</figure>
+
+<figure class="screenshot">
+  <img src="images/13-anki-card.png" alt="Anki 中翻一張剛同步的卡，正面 + 翻面各截一張" class="screenshot-img">
+  <figcaption>Anki 中翻一張剛同步的卡，正面 + 翻面各截一張</figcaption>
+</figure>
+
+<h3><span class="step">6</span>同步到手機（可選）</h3>
+<p>如果你建過 AnkiWeb 帳號，可以：</p>
+<ol>
+  <li>桌面 Anki 右上角 <kbd>同步 / Sync</kbd> 按鈕 → 同步到 AnkiWeb</li>
+  <li>手機裝 AnkiMobile（iOS）或 AnkiDroid（Android）</li>
+  <li>登入同一個 AnkiWeb 帳號 → sync → 卡片就到手機上了</li>
+</ol>
+</div>
+
+<!-- =============================================== -->
+<!-- FIX                                              -->
+<!-- =============================================== -->
+<h2 id="fix">🔧 修正：tag 漏標 / 答案錯</h2>
+
+<div class="scenario">情境：做完發現某題 tag 沒標到、答案錯了、想多加幾個 tag。</div>
+
+<h3>① Tag 漏標</h3>
+<div class="chat chat-user">
+  <div class="chat-who">你</div>
+  <div>114-2-6 Q15 漏標 hyperkalemia，重新掃一次 tag</div>
+</div>
+<p>Claude 會依 tag scan checklist 逐字重掃該題的題目 + 4 選項，輸出更正版整題。你直接 copy 回 .md，下次 sync 會自動 update Anki 卡片（不會新增重複卡，因為 ID 註解還在）。</p>
+
+<h3>② 答案錯誤</h3>
+<div class="chat chat-user">
+  <div class="chat-who">你</div>
+  <div>113-2-6 Q47 答案應該是 D 不是 A，請更正並重寫解釋</div>
+</div>
+
+<h3>③ 把錯位的考卷搬到正確資料夾</h3>
+<div class="chat chat-user">
+  <div class="chat-who">你</div>
+  <div>我不小心把 115-1-4 存到醫學三資料夾，幫我搬到醫學四</div>
+</div>
+
+<h3>④ 移除誤寫的 TARGET DECK 行</h3>
+<div class="chat chat-user">
+  <div class="chat-who">你</div>
+  <div>把 112-1-3.md 開頭那行 TARGET DECK 拿掉，會覆寫 deck mapping</div>
+</div>
+
+<h3>⑤ 一次重做某幾題</h3>
+<div class="chat chat-user">
+  <div class="chat-who">你</div>
+  <div>114-1-6 Q40~Q50 重新生成，這幾題 tag 太少</div>
+</div>
+
+<div class="callout tip">
+  💡 修改 .md 後一定要再回 Obsidian 跑一次 <code>Scan Vault</code>，Anki 才會看到更新。
+</div>
+
+<!-- =============================================== -->
+<!-- TROUBLE                                          -->
+<!-- =============================================== -->
+<h2 id="trouble">🚨 故障排除</h2>
+
+<h3>❌ Anki 跳 「Failed to connect to AnkiConnect」（無法連線到 AnkiConnect）</h3>
+<p><strong>檢查：</strong>Anki 主程式必須開著。</p>
+
+<h3>❌ Scan Vault 卡在「Scanning vault...」不會結束</h3>
+<p><strong>原因：</strong>Scan Directory 設成空白，plugin 試圖掃整個 vault。</p>
+<p><strong>解法：</strong></p>
+<ol>
+  <li>強制關閉 Obsidian</li>
+  <li>重開後到 Settings → Obsidian to Anki</li>
+  <li>把 Scan Directory 設成具體的科目資料夾（如 <code>考古/歷屆考古/醫學六</code>）</li>
+  <li>再跑一次 Scan Vault</li>
+</ol>
+
+<h3>❌ 同步成功但 .md 完全沒長出 ID 註解</h3>
+<p>兩個常見原因，依優先順序檢查：</p>
+
+<p><strong>原因 1：Scan Directory 範圍太大或設錯</strong> → 跟上一條同樣解法，縮小 Scan Directory 範圍。</p>
+
+<p><strong>原因 2：⚠️ 格式錯誤</strong>（很容易發生，之前搞到頭很痛的就是這個）。Obsidian to Anki plugin 的 regex 對格式超敏感，少一個空格、多一個換行就辨識不到。如果改過 .md 後該題沒長 ID，多半是這個原因。</p>
+
+<div class="callout warning">
+  <strong>📋 .md 格式規則（分三類：必要 / 建議 / 風格）</strong>
+  <pre style="background: rgba(0,0,0,0.05); padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 13px;"><code>[[年份-次數-X]]Q題號
+題目原文
+(A) 選項 A
+(B) 選項 B
+(C) 選項 C
+(D) 選項 D #flashcard␣
+答案（解釋）[[tag1]], [[tag2]], [[科別考古]]
+
+---
+
+[[年份-次數-X]]Q下一題
+...</code></pre>
+
+  <p style="margin-top: 12px;"><strong style="color: var(--red-border); font-size: 15px;">🔴 必要規則（plugin 真認的，違反 = sync 失敗）</strong></p>
+  <ol style="margin: 6px 0;">
+    <li><strong><code>#flashcard</code> 前後都要有半形空格</strong>，後面一個空格再換行（從 Custom Regexp 拆解出來：<code> #flashcard ?\n</code>）<br>
+      <span style="color: var(--text-soft); font-size: 13px;">→ <strong>這是最常踩雷的</strong>。少一個空格 plugin 就不認</span></li>
+    <li><strong><code>#flashcard</code> 那行下面緊接答案內容</strong>（不能空行、不能立刻 <code>---</code>、不能立刻下一題）</li>
+    <li><strong>答案行不能是 <code>&lt;!--ID:--&gt;</code> 開頭</strong>（plugin 同步後會自己加在最後，別手動刪或移位）</li>
+  </ol>
+
+  <p style="margin-top: 14px;"><strong style="color: var(--orange-border); font-size: 15px;">🟡 強烈建議（避免奇怪 bug）</strong></p>
+  <ol style="margin: 6px 0;">
+    <li><strong>題與題之間用 <code>---</code> 分隔，前後各空一行</strong><br>
+      <span style="color: var(--text-soft); font-size: 13px;">→ 不然連續多題的 regex 可能把第二題的題幹當成第一題的答案，整個解析錯亂</span></li>
+  </ol>
+
+</div>
+
+<div class="callout tip">
+  💡 <strong>最快解：</strong>如果發現某幾題格式爛掉，直接叫 Claude「113-2-6.md Q15-Q20 用 skill 標準格式重寫」，他會用 skill 內定義的格式重新輸出，貼回 .md 即可。
+</div>
+
+<!-- =============================================== -->
+<!-- TAG RULES                                        -->
+<!-- =============================================== -->
+<h2 id="tag-rules">📋 附錄：tag 規則速查</h2>
+
+<div class="callout tip">
+  💡 <strong>下面這些規則是針對台灣國考設計的</strong>，如果你要拿去做別的考試（NEJM Knowledge+、USMLE、其他國家專科考），或想要改科別 tag、改自動標記的類別——<strong>直接叫你自己的 AI 幫你改 skill 就好</strong>。skill 就是一份 markdown 設定檔，可自由客製。
+</div>
+
+<h3>會自動標的東西（六大類）</h3>
+<table>
+  <tr><th>類別</th><th>範例</th></tr>
+  <tr><td>疾病名稱</td><td><code>[[myocardial infarction]]</code>、<code>[[rheumatic mitral stenosis]]</code></td></tr>
+  <tr><td>症狀與臨床事件</td><td><code>[[fever]]</code>、<code>[[syncope]]</code>，HR 130 自動推 <code>[[tachycardia]]</code></td></tr>
+  <tr><td>體徵與理學檢查</td><td><code>[[clubbing]]</code>、<code>[[pulsus paradoxus]]</code>、<code>[[bronchial sound]]</code></td></tr>
+  <tr><td>藥物</td><td><code>[[ACEi]]</code>、<code>[[ARB]]</code>、<code>[[beta-blocker]]</code>（同選項多種藥物全標）</td></tr>
+  <tr><td>病原體</td><td><code>[[Shigella]]</code>、<code>[[Pseudomonas aeruginosa]]</code></td></tr>
+  <tr><td>檢驗異常狀態</td><td><code>[[hyperkalemia]]</code>、<code>[[metabolic acidosis]]</code></td></tr>
+</table>
+
+<h3>不會標的東西</h3>
+<ul>
+  <li>❌ 答案後括號內的解釋說明（只掃題目主文 + 4 選項）</li>
+  <li>❌ 診斷性檢查用藥（adenosine、dobutamine 等壓力試驗藥）</li>
+  <li>❌ 手術 / 處置名稱（appendectomy、colonoscopy 等）</li>
+  <li>❌ 影像檢查項目（X-ray、CT、MRI）</li>
+  <li>❌ 從醫學知識推論但題目沒寫的內容</li>
+  <li>❌ 過於泛化的詞（如 "cancer"，要標具體疾病名）</li>
+</ul>
+
+<h3>科別 tag 總對照表（內外科一覽）</h3>
+<table>
+  <tr><th>科別</th><th>Tag</th><th>科別</th><th>Tag</th></tr>
+  <tr><td>心臟科</td><td><code>[[CV考古]]</code></td><td>麻醉科</td><td><code>[[Anes考古]]</code></td></tr>
+  <tr><td>腸胃科</td><td><code>[[GI考古]]</code></td><td>眼科</td><td><code>[[Ophth考古]]</code></td></tr>
+  <tr><td>腎臟科</td><td><code>[[Nephro考古]]</code></td><td>耳鼻喉科</td><td><code>[[ENT考古]]</code></td></tr>
+  <tr><td>內分泌</td><td><code>[[Meta考古]]</code></td><td>婦產科</td><td><code>[[OBGYN考古]]</code></td></tr>
+  <tr><td>胸腔科</td><td><code>[[CM考古]]</code></td><td>復健科</td><td><code>[[Rehab考古]]</code></td></tr>
+  <tr><td>血液腫瘤</td><td><code>[[Hema考古]]</code></td><td>感染科</td><td><code>[[Inf考古]]</code></td></tr>
+  <tr><td>風濕免疫</td><td><code>[[AIR考古]]</code></td><td>神經科</td><td><code>[[Neuro考古]]</code></td></tr>
+  <tr><td>精神科</td><td><code>[[Psy考古]]</code></td><td>小兒科</td><td><code>[[Ped考古]]</code></td></tr>
+  <tr><td>皮膚科</td><td><code>[[Derma考古]]</code></td><td>家醫科</td><td><code>[[FM考古]]</code></td></tr>
+  <tr><td>急診</td><td><code>[[EM考古]]</code></td><td>醫學倫理</td><td><code>[[Ethics考古]]</code></td></tr>
+</table>
+<p>同一題可以掛多個科別 tag（例如兒童心臟病 → <code>[[Ped考古]], [[CV考古]]</code>；周產期心肌病變 → <code>[[OBGYN考古]], [[CV考古]]</code>）。</p>
+
+<!-- =============================================== -->
+<!-- LINKS                                            -->
+<!-- =============================================== -->
+<h2 id="links">🔗 相關連結</h2>
+<ul>
+  <li>📄 <strong>Skill 原始檔（SKILL.md）：</strong><a href="https://github.com/g07101334-max/medexam-anki-skill/blob/main/skills/anki-flashcard-medical-exam/SKILL.md" target="_blank">github.com/g07101334-max/medexam-anki-skill/blob/main/skills/anki-flashcard-medical-exam/SKILL.md</a></li>
+  <li>🏠 <strong>Public repo（可分享給朋友）：</strong><a href="https://github.com/g07101334-max/medexam-anki-skill" target="_blank">github.com/g07101334-max/medexam-anki-skill</a></li>
+  <li>🔌 <strong>Obsidian to Anki plugin 文件：</strong><a href="https://github.com/Pseudonium/Obsidian_to_Anki" target="_blank">github.com/Pseudonium/Obsidian_to_Anki</a></li>
+  <li>🔌 <strong>AnkiConnect addon：</strong><a href="https://ankiweb.net/shared/info/2055492159" target="_blank">ankiweb.net/shared/info/2055492159</a>（代碼 2055492159）</li>
+  <li>📚 <strong>Anki 主程式：</strong><a href="https://apps.ankiweb.net/" target="_blank">apps.ankiweb.net</a></li>
+  <li>📓 <strong>Obsidian：</strong><a href="https://obsidian.md" target="_blank">obsidian.md</a></li>
+  <li>🏛️ <strong>考選部歷屆試題下載：</strong><a href="https://wwwq.moex.gov.tw/exam/wFrmExamQandASearch.aspx" target="_blank">wwwq.moex.gov.tw</a></li>
+</ul>
+
+<footer>
+  <p>
+    這份文件由 <code>anki-flashcard-medical-exam</code> skill 的使用紀錄整理而成。<br>
+    對應的 skill 原始檔 ➜ <a href="https://github.com/g07101334-max/medexam-anki-skill/blob/main/skills/anki-flashcard-medical-exam/SKILL.md" target="_blank">SKILL.md on GitHub</a><br>
+    Made with 💙 by Ting · 2026
+  </p>
+</footer>
+
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox-overlay" onclick="this.classList.remove('open')">
+  <img id="lightbox-img" src="" alt="">
+</div>
+<script>
+  document.addEventListener('click', function(e) {
+    if (e.target.classList && e.target.classList.contains('screenshot-img')) {
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src = e.target.src;
+      lb.classList.add('open');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>

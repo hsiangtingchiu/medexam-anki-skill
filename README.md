@@ -2,6 +2,12 @@
 
 > 給 Claude 用的台灣醫師國考相關 skill 集合 — Claude skills for Taiwan medical board exam workflows.
 
+## 📖 完整新手教學（強烈推薦先看）
+
+👉 **[線上互動式教學 →](https://g07101334-max.github.io/medexam-anki-skill/)**
+
+從零開始：安裝 Anki / Obsidian → 設定 plugin → 用 skill 生卡 → 同步到 Anki，**含 16 張截圖一步步教**。第一次用必看。
+
 ## 這個 repo 是什麼？
 
 收錄一系列 [Claude Skill](https://www.anthropic.com/news/claude-skills)，把台灣醫師國考（醫學三、四、五、六）相關的繁瑣處理流程包好，讓 Claude 直接接手。

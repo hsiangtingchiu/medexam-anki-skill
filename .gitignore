@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Obsidian
+.obsidian/workspace*
+.obsidian/cache
+.obsidian/appearance.json
+.smart-env/
+.trash/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python（如果之後有附 helper script）
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# 暫存
+*.log
+*.tmp
